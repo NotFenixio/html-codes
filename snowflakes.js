@@ -1,92 +1,24 @@
-<script type="text/javascript">
-var speed=30;
-var flakes=150;
-var flake_image="http://i60.servimg.com/u/f60/13/20/23/83/sin_ta11.png"; // URL de la imagen de nieve
-var swide, shigh;
-var dx=new Array();
-var xp=new Array();
-var yp=new Array();
-var am=new Array();
-var sty=new Array();
-window.onload=function() { if (document.getElementById) {
-var k, f, b;
-b=document.createElement("div");
-b.style.position="absolute";
-b.setAttribute("id", "bod");
-document.body.appendChild(b);
-set_scroll();
-set_width();
-for (var i=0; i<flakes; i++) {
-dx[i]=0;
-am[i]=Math.random()*20;
-xp[i]=am[i]+Math.random()*(swide-2*am[i]-25);
-yp[i]=Math.random()*shigh;
-sty[i]=0.75+1.25*Math.random();
-f=document.createElement("div");
-f.style.position="absolute";
-f.setAttribute("id", "flk"+i);
-f.style.zIndex=i;
-f.style.top=yp[i]+"px";
-f.style.left=xp[i]+"px";
-k=document.createElement("img");
-k.src=flake_image;
-f.appendChild(k);
-b.appendChild(f);
+<script type='text/javascript'>
+var fallObjects=new Array();function newObject(url,height,width){fallObjects[fallObjects.length]=new Array(url,height,width);}
+var numObjs=20, waft=50, fallSpeed=10, wind=0;
+newObject("http://2.bp.blogspot.com/--fII5xz-9vY/UM-djWHHwgI/AAAAAAAABrI/tEKS6_ctv_k/s400/nieve2_jessi_diyva.png",22,22);
+newObject("http://3.bp.blogspot.com/-DPHwVIctTlg/UM-di9jKOiI/AAAAAAAABq8/wV567ynxL2U/s400/nieve1_jessi_diyva.png",22,22);
+function winSize(){winWidth=(moz)?window.innerWidth-180:document.body.clientWidth-180;winHeight=(moz)?window.innerHeight+500:document.body.clientHeight+500;}
+function winOfy(){winOffset=(moz)?window.pageYOffset:document.body.scrollTop;}
+function fallObject(num,vari,nu){
+objects[num]=new Array(parseInt(Math.random()*(winWidth-waft)),-30,(parseInt(Math.random()*waft))*((Math.random()>0.5)?1:-1),0.02+Math.random()/20,0,1+parseInt(Math.random()*fallSpeed),vari,fallObjects[vari][1],fallObjects[vari][2]);
+if(nu==1){document.write('<img id="fO'+i+'" style="position:fixed;" src="'+fallObjects[vari][0]+'">'); }
 }
-setInterval("winter_snow()", speed);
-}}
-window.onresize=set_width;
-function set_width() {
-if (document.documentElement && document.documentElement.clientWidth) {
-swide=document.documentElement.clientWidth;
-shigh=document.documentElement.clientHeight;
+function fall(){
+for(i=0;i<numObjs;i++){
+var fallingObject=document.getElementById('fO'+i);
+if((objects[i][1]>(winHeight-(objects[i][5]+objects[i][7])))||(objects[i][0]>(winWidth-(objects[i][2]+objects[i][8])))){fallObject(i,objects[i][6],0);}
+objects[i][0]+=wind;objects[i][1]+=objects[i][5];objects[i][4]+=objects[i][3];
+with(fallingObject.style){ top=objects[i][1]+winOffset+'px';left=objects[i][0]+(objects[i][2]*Math.cos(objects[i][4]))+'px';}
 }
-else if (typeof(self.innerHeight)=="number") {
-swide=self.innerWidth;
-shigh=self.innerHeight;
+setTimeout("fall()",31);
 }
-else if (document.body.clientWidth) {
-swide=document.body.clientWidth;
-shigh=document.body.clientHeight;
-}
-else {
-swide=800;
-shigh=600
-}
-}
-window.onscroll=set_scroll;
-function set_scroll() {
-var sleft, sdown;
-if (typeof(self.pageYOffset)=="number") {
-sdown=self.pageYOffset;
-sleft=self.pageXOffset;
-}
-else if (document.body.scrollTop || document.body.scrollLeft) {
-sdown=document.body.scrollTop;
-sleft=document.body.scrollLeft;
-}
-else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
-sleft=document.documentElement.scrollLeft;
-sdown=document.documentElement.scrollTop;
-}
-else {
-sdown=0;
-sleft=0;
-}
-document.getElementById("bod").style.top=sdown+"px";
-document.getElementById("bod").style.left=sleft+"px";
-}
-function winter_snow() {
-for (var i=0; i<flakes; i++) {
-yp[i]+=sty[i];
-if (yp[i]>shigh-30) {
-xp[i]=am[i]+Math.random()*(swide-2*am[i]-25);
-yp[i]=0;
-sty[i]=0.75+1.25*Math.random();
-}
-dx[i]+=0.02+Math.random()/10;
-document.getElementById("flk"+i).style.top=yp[i]+"px";
-document.getElementById("flk"+i).style.left=(xp[i]+am[i]*Math.sin(dx[i]))+"px";
-}
-}
+var objects=new Array(),winOffset=0,winHeight,winWidth,togvis,moz=(document.getElementById&&!document.all)?1:0;winSize();
+for (i=0;i<numObjs;i++){fallObject(i,parseInt(Math.random()*fallObjects.length),1);}
+fall();
 </script>
