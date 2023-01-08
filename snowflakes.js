@@ -1,4 +1,3 @@
-<script type='text/javascript'>
 var fallObjects=new Array();function newObject(url,height,width){fallObjects[fallObjects.length]=new Array(url,height,width);}
 var numObjs=20, waft=50, fallSpeed=10, wind=0;
 newObject("http://2.bp.blogspot.com/--fII5xz-9vY/UM-djWHHwgI/AAAAAAAABrI/tEKS6_ctv_k/s400/nieve2_jessi_diyva.png",22,22);
@@ -21,4 +20,3 @@ setTimeout("fall()",31);
 var objects=new Array(),winOffset=0,winHeight,winWidth,togvis,moz=(document.getElementById&&!document.all)?1:0;winSize();
 for (i=0;i<numObjs;i++){fallObject(i,parseInt(Math.random()*fallObjects.length),1);}
 fall();
-</script>
